@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  database-user-service:
+    image: "mongo:latest"
+    restart: always
+    ports:
+       - 27017:27017
+
+  user-service:
+    container_name: user-service
+    build:
+      context: user-service
+    ports:
+      - 8081:8080
+    depends_on:
+      - database-user-service
