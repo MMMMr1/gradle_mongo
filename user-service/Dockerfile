@@ -1,4 +1,4 @@
-FROM openjdk:17.0.2-jdk-oracle
+FROM openjdk:17
 WORKDIR /app
 
 COPY build/libs/user-service-0.0.1-SNAPSHOT.jar /app/user-service-0.0.1-SNAPSHOT.jar

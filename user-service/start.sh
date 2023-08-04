@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gradle build
+./gradlew build
 
 docker-compose build
 docker-compose up
