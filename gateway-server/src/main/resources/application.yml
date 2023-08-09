@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: gateway-server
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:57072/eureka
+    register-with-eureka: true
+    fetch-registry: true

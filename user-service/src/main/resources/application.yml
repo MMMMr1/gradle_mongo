@@ -1,0 +1,21 @@
+spring:
+   data:
+     mongodb:
+       host: host.docker.internal
+       port: 27017
+   application:
+     name: user-service
+   kafka:
+     bootstrap-servers: kafka:29092
+     consumer:
+        auto-offset-reset: earliest
+#        group-id: user-service
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka
+    register-with-eureka: true
+    fetch-registry: true

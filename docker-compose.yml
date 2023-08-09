@@ -5,12 +5,42 @@ services:
     restart: always
     ports:
        - 27017:27017
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    hostname: kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+
+  zookeeper:
+     image: confluentinc/cp-zookeeper:latest
+     environment:
+       ZOOKEEPER_CLIENT_PORT: 2181
+       ZOOKEEPER_TICK_TIME: 2000
+     ports:
+       - 2181:2181
+
+  eureka-server:
+    build: eureka-server
+    image: eureka-server:1.0.0
+    ports:
+      - 57072:57072
 
   user-service:
     container_name: user-service
-    build:
-      context: user-service
+    build: ./user-service
     ports:
       - 8081:8080
     depends_on:
       - database-user-service
+      - eureka-server
+      - kafka
