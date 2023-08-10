@@ -1,19 +1,14 @@
 server:
-  port: 8081
-
+  port: 8765
 spring:
   application:
-    name: user-service
-
-  data:
-    mongodb:
-      host: host.docker.internal
-      port: 27017
-  kafka:
-    bootstrap-servers: kafka:29092
-    consumer:
-      auto-offset-reset: earliest
-
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
 
 eureka:
   instance:
@@ -23,3 +18,4 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://eureka-server:8761/eureka
+

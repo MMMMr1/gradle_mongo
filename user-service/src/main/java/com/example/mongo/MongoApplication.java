@@ -1,15 +1,11 @@
 package com.example.mongo;
 
-import com.example.mongo.core.dto.PersonDto;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@EnableEurekaClient
 @SpringBootApplication
+//@EnableDiscoveryClient
 public class MongoApplication {
 
 	public static void main(String[] args) {

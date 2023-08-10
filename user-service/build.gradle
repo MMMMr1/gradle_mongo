@@ -23,6 +23,9 @@ configurations {
 repositories {
 	mavenCentral()
 }
+ext {
+	set('springCloudVersion', "2022.0.4")
+}
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.0.7'
 	implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
@@ -31,9 +34,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
 	implementation 'org.springframework.kafka:spring-kafka'
 	implementation 'org.apache.kafka:kafka-clients'
-//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.2'
-//	implementation 'org.apache.kafka:kafka-streams'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 jar {
@@ -47,6 +53,7 @@ tasks.withType(Jar){
 if (!hasProperty('mainClass')) {
 	ext.mainClass = 'com.example.mongo.MongoApplication'
 }
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
