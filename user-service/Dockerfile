@@ -7,3 +7,4 @@ FROM openjdk:17
 WORKDIR /app
 COPY --from=gradleimage /home/gradle/source/build/libs/user-service-0.0.1-SNAPSHOT.jar /app/
 ENTRYPOINT ["java","-jar","user-service-0.0.1-SNAPSHOT.jar"]
+EXPOSE 8080 8080
