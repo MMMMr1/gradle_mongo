@@ -1,4 +1,4 @@
-package com.document.domaincrawler.schema;
+package com.example.mongo.core.dto;
 
 import lombok.*;
 
