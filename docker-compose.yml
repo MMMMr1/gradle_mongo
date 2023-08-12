@@ -53,6 +53,16 @@ services:
     networks:
       - document_ntwrk
 
+
+  domain-crawler:
+    container_name: domain-crawler
+    build: ./domain-crawler
+    depends_on:
+      - eureka-server
+      - kafka
+    networks:
+      - document_ntwrk
+
   api-gateway:
     build: ./api-gateway
     ports:
@@ -62,6 +72,7 @@ services:
       - eureka-server
     networks:
       - document_ntwrk
+
   proxy:
     build: proxy
     image: document_proxy:1.0.0
@@ -69,6 +80,19 @@ services:
       - "8080:8080"
     networks:
       - document_ntwrk
+
+#  shema-registry:
+#    image: confluentinc/cp-schema-registry:3.3.1
+#    network_mode: host
+#    depends_on:
+#      - zookeeper
+#      - kafka
+#    environment:
+#      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+#      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
+#    networks:
+#      - document_ntwrk
+
 networks:
   document_ntwrk:
     name: document_ntwrk

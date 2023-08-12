@@ -1,0 +1,20 @@
+"namespace": "com.document.domaincrawler.schema",
+  "type": "record",
+  "name": "PersonDto",
+  "fields": [
+    {
+      "name": "id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "name",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaListeners {
 
-    @KafkaListener(
-            topics = "user-service",
-            groupId = "groupId"
-    )
-    void listener(PersonDto personDto){
-
-    }
+//    @KafkaListener(
+//            topics = "user-service",
+//            groupId = "groupId"
+//    )
+//    void listener(PersonDto personDto){
+//
+//    }
 }
