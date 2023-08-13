@@ -8,11 +8,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/kafka")
 @RequiredArgsConstructor
 public class DomainCrawlerController {
+
     private final DomainCrawlerService domainCrawlerService;
 
     @RequestMapping(method = RequestMethod.POST)
     public String create(@RequestBody PersonDto person) {
-        domainCrawlerService.crawl(person);
+        domainCrawlerService.create(person);
         return "Domain crawler has scrapped your data";
+    }
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public PersonDto get(@PathVariable("id") String id)  {
+        return domainCrawlerService.getById(id);
     }
 }

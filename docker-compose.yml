@@ -79,19 +79,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - document_ntwrk
-
-#  shema-registry:
-#    image: confluentinc/cp-schema-registry:3.3.1
-#    network_mode: host
-#    depends_on:
-#      - zookeeper
-#      - kafka
-#    environment:
-#      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-#      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
-#    networks:
-#      - document_ntwrk
+      - document_ntwrk 
 
 networks:
   document_ntwrk:

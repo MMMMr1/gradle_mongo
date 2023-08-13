@@ -1,27 +1,20 @@
 server:
-  port: 8080
-
+  port: 8081
 spring:
   application:
-    name: user-service
-
-  data:
-    mongodb:
-      host: host.docker.internal
-      port: 27017
+    name: domain-crawler
   kafka:
-    bootstrap-servers: kafka:29092
+    bootstrap-servers:
+      - kafka:29092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
     consumer:
-      group-id: "person-id"
+      group-id: "kafka-id"
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         "[spring.json.trusted.packages]": "*"
-
 eureka:
   instance:
     prefer-ip-address: true

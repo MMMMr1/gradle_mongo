@@ -6,9 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class MongoApplication {
+public class DomainCrawlerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MongoApplication.class, args);
+		SpringApplication.run(DomainCrawlerApplication.class, args);
 	}
+
 }

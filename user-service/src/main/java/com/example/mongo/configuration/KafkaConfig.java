@@ -1,6 +1,7 @@
 //package com.example.mongo.configuration;
 //
 //import com.example.mongo.core.dto.PersonDto;
+//import com.example.mongo.service.api.PersonService;
 //import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.databind.JsonMappingException;
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,45 +34,49 @@
 //@EnableKafkaStreams
 //public class KafkaConfig {
 //
+//    @Value("${spring.kafka.bootstrap-servers}")
+//    private String bootstrapAddress;
+//    private PersonService personService;
+//    @Bean(name = KafkaStreamsDefaultConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
+//    KafkaStreamsConfiguration kafkaStreamsConfiguration(){
+//            Map<String, Object> props = new HashMap<>();
+//            props.put(APPLICATION_ID_CONFIG, "streams-app");
+//            props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+//            props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+//            props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 //
-////    @Bean(name = KafkaStreamsDefaultConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
-////    KafkaStreamsConfiguration kafkaStreamsConfiguration(){
-////            Map<String, Object> props = new HashMap<>();
-////            props.put(APPLICATION_ID_CONFIG, "streams-app");
-////            props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-////            props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-////            props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-////
-////            return new KafkaStreamsConfiguration(props);
-////        }
-////        @Bean
-////    public Serde<PersonDto> userSerde(){
-////        return Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(PersonDto.class));
-////        }
-////        @Bean
-////    public KStream<String, PersonDto> kStream (StreamsBuilder streamsBuilder){
-////            KStream<String, String> messageStream = streamsBuilder
-////                    .stream("input-topic", Consumed.with(Serdes.String(), Serdes.String()));
-////
-////            KStream<String,PersonDto> personDtoStream = messageStream
-////                    .mapValues(this::getPersonDtoFromString);
-//////                    .filter()
-//////                    .groupBy((key, word) -> word, Grouped.with(STRING_SERDE, STRING_SERDE))
-//////                    .count();
-////
-////            personDtoStream.to("output-topic", Produced.with(Serdes.String(),userSerde()));
-////            return personDtoStream;
-////        }
-////        @Bean
-////    public ObjectMapper objectMapper(){
-////        return new ObjectMapper();
-////        }
-////        PersonDto getPersonDtoFromString(String personString){
-////        PersonDto personDto = null;
-////        try {
-////            personDto = objectMapper().readValue(personString,PersonDto.class);
-////        }  catch (JsonProcessingException e) {
-////            throw new RuntimeException(e);
-////        }return personDto;
-////        }
+//            return new KafkaStreamsConfiguration(props);
+//        }
+//        @Bean
+//    public Serde<PersonDto> userSerde(){
+//        return Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(PersonDto.class));
+//        }
+//        @Bean
+//    public KStream<String, PersonDto> kStream (StreamsBuilder streamsBuilder){
+//            KStream<String, String> messageStream = streamsBuilder
+//                    .stream("person", Consumed.with(Serdes.String(), Serdes.String()));
+//
+//            KStream<String,PersonDto> personDtoStream = messageStream
+//                    .mapValues(this::getPersonDtoFromString)
+//                            .map(s -> personService.create(s.));
+//
+////                    .filter()
+////                    .groupBy((key, word) -> word, Grouped.with(STRING_SERDE, STRING_SERDE))
+////                    .count();
+//
+//            personDtoStream.to("output-topic", Produced.with(Serdes.String(),userSerde()));
+//            return personDtoStream;
+//        }
+//        @Bean
+//    public ObjectMapper objectMapper(){
+//        return new ObjectMapper();
+//        }
+//        PersonDto getPersonDtoFromString(String personString){
+//        PersonDto personDto = null;
+//        try {
+//            personDto = objectMapper().readValue(personString,PersonDto.class);
+//        }  catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }return personDto;
+//        }
 //    }
