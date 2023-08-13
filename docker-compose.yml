@@ -5,12 +5,82 @@ services:
     restart: always
     ports:
        - 27017:27017
+    networks:
+      - document_ntwrk
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    hostname: kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - document_ntwrk
+
+  zookeeper:
+     image: confluentinc/cp-zookeeper:latest
+     environment:
+       ZOOKEEPER_CLIENT_PORT: 2181
+       ZOOKEEPER_TICK_TIME: 2000
+     ports:
+       - 2181:2181
+     networks:
+       - document_ntwrk
+
+  eureka-server:
+    build: eureka-server
+    image: eureka-server:1.0.0
+    ports:
+      - 8761:8761
+    networks:
+      - document_ntwrk
 
   user-service:
     container_name: user-service
-    build:
-      context: user-service
-    ports:
-      - 8081:8080
+    build: ./user-service 
     depends_on:
       - database-user-service
+      - eureka-server
+      - kafka
+    networks:
+      - document_ntwrk
+
+
+  domain-crawler:
+    container_name: domain-crawler
+    build: ./domain-crawler
+    depends_on:
+      - eureka-server
+      - kafka
+    networks:
+      - document_ntwrk
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - 8765:8765
+    depends_on:
+      - user-service
+      - eureka-server
+    networks:
+      - document_ntwrk
+
+  proxy:
+    build: proxy
+    image: document_proxy:1.0.0
+    ports:
+      - "8080:8080"
+    networks:
+      - document_ntwrk 
+
+networks:
+  document_ntwrk:
+    name: document_ntwrk

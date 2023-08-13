@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/persons")
 public class PersonController {
     private final PersonService service;
-
     @RequestMapping(method = RequestMethod.POST)
     protected ResponseEntity<?> create(@RequestBody @Validated PersonDto person)   {
         service.create(person);

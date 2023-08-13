@@ -3,8 +3,15 @@ plugins {
 	id 'org.springframework.boot' version '3.1.2'
 	id 'io.spring.dependency-management' version '1.1.2'
 	id 'application'
+//	id 'com.commercehub.gradle.plugin.avro' version '1.11.0'
 }
-
+//buildscript{
+//	repositories {
+//		maven {
+//			url 'https://plugins.gradle.org/m2/'
+//		}
+//	}
+//}
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -23,13 +30,32 @@ configurations {
 repositories {
 	mavenCentral()
 }
+ext {
+	set('springCloudVersion', "2022.0.4")
+}
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.0.7'
 	implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.2'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.1'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
 	compileOnly 'org.projectlombok:lombok:1.18.26'
 	annotationProcessor 'org.projectlombok:lombok:1.18.26'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.apache.kafka:kafka-streams'
+	implementation 'org.apache.kafka:kafka-clients'
+	implementation 'org.springframework.cloud:spring-cloud-stream'
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka-streams'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//	classpath 'com.commercehub.gradle.plugin:gradle-avro-plugin:1.11.0'
 }
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+//apply plugin: 'com.commercehub.gradle.plugin.avro'
 
 jar {
 	manifest {
@@ -42,6 +68,7 @@ tasks.withType(Jar){
 if (!hasProperty('mainClass')) {
 	ext.mainClass = 'com.example.mongo.MongoApplication'
 }
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
