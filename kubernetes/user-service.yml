@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: kafka-cluster
+spec:
+  selector:
+    app: user-service
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: kafka-cluster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: marymary88/mongo_gradle_study_project-user-service:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka-service:29092
+            - name: database-mongodb
+              value: database-mongodb
+            - name: eureka-server
+              value: eureka-server:8761
