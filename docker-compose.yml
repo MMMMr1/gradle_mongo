@@ -70,6 +70,7 @@ services:
     depends_on:
       - user-service
       - eureka-server
+      - domain-crawler
     networks:
       - document_ntwrk
 

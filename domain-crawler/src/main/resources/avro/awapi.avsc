@@ -1,4 +1,4 @@
-"namespace": "com.document.domaincrawler.schema",
+"namespace": "com.example.mongo.schema",
   "type": "record",
   "name": "PersonDto",
   "fields": [
